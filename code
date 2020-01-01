@@ -1,0 +1,99 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+import lxml
+import time
+from selenium.webdriver.support import expected_conditions as EC
+chrome_options = Options()
+#chrome_options.add_argument('--headless')
+#chrome_options.add_argument('--disable-gpu')
+path = r'E:\software\ana\chromedriver.exe' 
+driver = webdriver.Chrome(executable_path=path, options=chrome_options)
+driver.get('http://bkxk.xmu.edu.cn/xsxk/index.html')
+ID_box = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.XPATH, '//*[@id="username"]')))
+PA_box = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.XPATH, '//*[@id="password"]')))
+for a in ID_box:
+    a.send_keys('')
+for b in PA_box:
+    b.send_keys('')
+#ID_box.send_keys('17420172200941')
+all_handle = driver.window_handles
+handle = driver.current_window_handle
+driver.switch_to.window(handle)
+##选不上的
+def fail():
+    fail_button = driver.find_element_by_xpath('/html/body/div[10]/div[11]/div/button/span')
+    fail_button.click()
+def success():
+    confirm_btn = driver.find_element_by_xpath('/html/body/div[10]/div[11]/div/button[1]/span')
+    confirm_btn.click()
+    reconfirm_btn = driver.find_element_by_xpath('/html/body/div[10]/div[11]/div/button/span')
+    reconfirm_btn.click()
+##院选课
+zx_bottom = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.XPATH, '//*[@id="zxxkLink"]')))
+for zx in zx_bottom:
+    zx.click()
+yx_bottom = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.XPATH, '//*[@id="zxxk_tab"]/li[3]')))
+for yx in yx_bottom:
+    yx.click()
+driver.switch_to.frame('iFrame_yxxxk')
+####可以选的上的
+for i in range(1,10000):
+    goal_button = driver.find_element_by_xpath('//*[@id="view_table_xkbut_8B1BD3DA5DC42089E0530B4C1BAC8F70"]/a')
+    goal_button.click()
+    confirm_btn = driver.find_element_by_xpath('/html/body/div[10]/div[11]/div/button[1]/span')
+    try:
+        if driver.find_element_by_xpath('/html/body/div[10]/div[11]/div/button[2]/span').text=='取消':
+            success()
+        else:contiune
+    except:fail()
+##院选课
+zx_bottom = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.XPATH, '//*[@id="zxxkLink"]')))
+for zx in zx_bottom:
+    zx.click()
+yx_bottom = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.XPATH, '//*[@id="zxxk_tab"]/li[3]')))
+for yx in yx_bottom:
+    yx.click()
+driver.switch_to.frame('iFrame_yxxxk')
+###熊英子的课
+for i in range(1,10000):
+    goal_button = driver.find_element_by_xpath('//*[@id="tr_view_table_8B1BD3DA5DC42089E0530B4C1BAC8F70"]/td[12]')
+    goal_button.click()
+    confirm_btn = driver.find_element_by_xpath('/html/body/div[10]/div[11]/div/button[1]/span')
+    try:
+        if driver.find_element_by_xpath('/html/body/div[10]/div[11]/div/button[2]/span').text=='取消':
+            success()
+        else:
+            fail()
+    except:fail()
+    i = i+1
+ ###校选课
+handle = driver.current_window_handle
+driver.switch_to.window(handle)
+##校选课找人
+zx_bottom = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.XPATH, '//*[@id="zxxkLink"]')))
+for zx in zx_bottom:
+    zx.click()
+yx_bottom = WebDriverWait(driver, 10).until(EC.visibility_of_all_elements_located((By.XPATH, '//*[@id="zxxk_tab"]/li[4]')))
+for yx in yx_bottom: 
+    
+    yx.click()
+driver.switch_to.frame('iFrame_qxxxxk')
+input_tec_box = driver.find_element_by_xpath('//*[@id="js_text"]')
+input_tec_box.send_keys('王亚军')
+confirm_buttom = driver.find_element_by_xpath('//*[@id="advQueryFun"]')
+confirm_buttom.click()
+####作妖王亚军的课
+for i in range(1,100000):
+    goal_button = driver.find_element_by_xpath('//*[@id="tr_view_table20191170090080002107870"]/td[12]')
+    goal_button.click()
+    try:
+        if driver.find_element_by_xpath('/html/body/div[10]/div[11]/div/button[2]/span').text=='取消':
+            success()
+        else:
+            fail()
+    except:fail()
