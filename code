@@ -20,7 +20,7 @@ for a in ID_box:
     a.send_keys('')
 for b in PA_box:
     b.send_keys('')
-#ID_box.send_keys('17420172200941')
+#ID_box.send_keys('学号')
 all_handle = driver.window_handles
 handle = driver.current_window_handle
 driver.switch_to.window(handle)
